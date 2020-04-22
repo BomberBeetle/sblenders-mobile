@@ -14,7 +14,7 @@ public class TabPedidos extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle onCreateSavedInstanceBundle){
         View inflatedLayout = inflater.inflate(R.layout.tab_pedido, container, false);
         RecyclerView rcv = (RecyclerView)inflatedLayout.findViewById(R.id.rcv1);
-        LinearLayoutManager llm = new LinearLayoutManager(getContext());
+        LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(llm);
         rcv.setAdapter(new PedidosAdapter());
         return inflatedLayout;
