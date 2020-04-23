@@ -6,16 +6,13 @@
     android:layout_height="match_parent"
     tools:context="teste.br.sblendersApp.PedidoActivity">
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="174dp"
-        android:layout_marginTop="353dp"
-        android:layout_marginEnd="179dp"
-        android:layout_marginBottom="359dp"
-        android:text="não-implementado, sorry"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rcv_produtos"
+        android:layout_width="0dp"
+        android:layout_height="400dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

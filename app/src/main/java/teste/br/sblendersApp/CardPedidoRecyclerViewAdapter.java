@@ -28,8 +28,8 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
     }
 
     @Override
-    public void onBindViewHolder(CardPedidoRecyclerViewAdapter.CardPedidoViewHolder personViewHolder, int i) {
-        personViewHolder.t.setText("Prato " +Integer.toString(i + 1));
+    public void onBindViewHolder(CardPedidoRecyclerViewAdapter.CardPedidoViewHolder cardPedidoViewHolder, int i) {
+        cardPedidoViewHolder.t.setText("Prato " +Integer.toString(i + 1));
     }
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
