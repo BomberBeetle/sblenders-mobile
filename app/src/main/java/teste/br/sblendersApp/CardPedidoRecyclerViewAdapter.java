@@ -1,6 +1,7 @@
 package teste.br.sblendersApp;
 
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,8 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
 
     @Override
     public void onBindViewHolder(CardPedidoRecyclerViewAdapter.CardPedidoViewHolder cardPedidoViewHolder, int i) {
-        cardPedidoViewHolder.t.setText("Prato " +Integer.toString(i + 1));
+        cardPedidoViewHolder.t.setText("Prato " +Integer.toString(i + 1) + "3 Mozzarella, 1 Picles, 2 Molho Adicional");
+        cardPedidoViewHolder.t.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
     }
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
