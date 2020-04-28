@@ -1,6 +1,5 @@
 package teste.br.sblendersApp;
 
-import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +19,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         ImageButton btnCollapse;
         TextView ordens;
         TextView ordensTitle;
+        Button spaghetti;
         boolean collapsed;
         public PedidosViewHolder(View view){
             super(view);
@@ -30,6 +30,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             btnCollapse = view.findViewById(R.id.card_collapse_button);
             ordens = view.findViewById(R.id.txt_instrucoes);
             ordensTitle = view.findViewById(R.id.card_text_instrucoes);
+            spaghetti = view.findViewById(R.id.card_btn_retract);
             collapse();
         }
         public void collapse(){
@@ -42,7 +43,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             collapsed = true;
         }
         public void open(){
-            btnCollapse.setImageDrawable(btnCollapse.getResources().getDrawable(R.drawable.expander_open_holo_light));
+            btnCollapse.setImageDrawable(btnCollapse.getResources().getDrawable(R.drawable.expander_close_holo_light));
             rcvPratos.setVisibility(View.VISIBLE);
             btnRejeita.setVisibility(View.VISIBLE);
             btnAceita.setVisibility(View.VISIBLE);
@@ -76,7 +77,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
                 */
             }
         });
-        personViewHolder.btnCollapse.setOnClickListener(new View.OnClickListener(){
+        personViewHolder.spaghetti.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
                 if(personViewHolder.collapsed){
