@@ -2,5 +2,9 @@
     <string name="app_name">SBLENDERS</string>
     <string name="sample_240">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
  Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </string>
-
+    <string name="pedido">Pedido XXXX</string>
+    <string name="rejeitar">REJEITAR</string>
+    <string name="instrucoes">Instruções</string>
+    <string name="marcar">MARCAR COMO PRONTO</string>
+    <string name="descricao">Botão de dropar</string>
 </resources>

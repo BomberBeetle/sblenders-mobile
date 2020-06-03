@@ -20,7 +20,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:text="MARCAR COMO PRONTO"
+            android:text="@string/marcar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
@@ -30,7 +30,7 @@
             android:layout_height="24dp"
             android:layout_marginStart="30dp"
             android:layout_marginTop="12dp"
-            android:text="Instruções"
+            android:text="@string/instrucoes"
             android:textAppearance="@style/TextAppearance.AppCompat.Display1"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,8 +41,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
-            android:layout_marginTop="16dp"
-            android:text="Pedido XXXX"
+            android:layout_marginTop="12dp"
+            android:text="@string/pedido"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textSize="18sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginBottom="16dp"
-            android:text="REJEITAR"
+            android:text="@string/rejeitar"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 
@@ -91,6 +91,7 @@
             android:layout_height="50dp"
             android:layout_marginEnd="30dp"
             android:background="#009C27B0"
+            android:contentDescription="@string/descricao"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/expander_close_holo_light" />
@@ -101,10 +102,12 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="@+id/card_text_n_pedido"
+            app:layout_constraintBottom_toBottomOf="@+id/card_collapse_button"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
 
     </android.support.constraint.ConstraintLayout>
 </android.support.v7.widget.CardView>
