@@ -1,3 +1,5 @@
+LEMBRANDO QUE PRECISA CONECTAR AO PC COM O COMANDO "adb reverse tcp:44323 tcp:44323"
+
 public static TextView txtUserid;
 
     @Override
