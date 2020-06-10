@@ -1,0 +1,75 @@
+public static TextView txtUserid;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_cleitinguhuhgugugu);
+
+        Button btnJorge = (Button) findViewById(R.id.btnTeste);
+        btnJorge.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                new UserNameToId().execute("https://localhost:44323/api/AgenteToken/online1/teste");
+            }
+        });
+    }
+
+    protected class UserNameToId extends AsyncTask<String, Void, String> {
+        @Override
+        public String doInBackground(String... url) {
+
+            try {
+                TrustManager[] trustAllCerts = new TrustManager[] {new X509TrustManager() {
+                    public java.security.cert.X509Certificate[] getAcceptedIssuers() {
+                        return null;
+                    }
+                    public void checkClientTrusted(X509Certificate[] certs, String authType) {
+                    }
+                    public void checkServerTrusted(X509Certificate[] certs, String authType) {
+                    }
+                }
+                };
+
+                // Install the all-trusting trust manager
+                SSLContext sc = SSLContext.getInstance("SSL"); // Add in try catch block if you get error.
+                sc.init(null, trustAllCerts, new java.security.SecureRandom()); // Add in try catch block if you get error.
+                HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+
+                // Create all-trusting host name verifier
+                HostnameVerifier allHostsValid = new HostnameVerifier() {
+                    public boolean verify(String hostname, SSLSession session) {
+                        return true;
+                    }
+                };
+
+                // Install the all-trusting host verifier
+                HttpsURLConnection.setDefaultHostnameVerifier(allHostsValid);
+                URL Url = new URL(url[0]);
+                URLConnection urlConnection = Url.openConnection();
+                InputStream inputStream = urlConnection.getInputStream();
+                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+                String str = "";
+                str = bufferedReader.readLine();
+
+                return str;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            super.onPostExecute(result);
+            JSONObject jObject = null;
+            try {
+                jObject = new JSONObject(result);
+                String Token = jObject.getString("token");
+                int Id = jObject.getInt("id");
+                txtUserid = (TextView) findViewById(R.id.txtTeste);
+                txtUserid.setText("Token:" + Token + "Id:" + Id );
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
