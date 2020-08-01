@@ -1,10 +1,18 @@
 <resources>
     <string name="app_name">SBLENDERS</string>
+    <string name="padrao">Text View</string>
     <string name="sample_240">Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem
  Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum </string>
     <string name="pedido">Pedido XXXX</string>
-    <string name="rejeitar">REJEITAR</string>
+    <string name="rejeitar">Rejeitar</string>
     <string name="instrucoes">Instruções</string>
-    <string name="marcar">MARCAR COMO PRONTO</string>
+    <string name="marcar">Marcar como pronto</string>
     <string name="descricao">Botão de dropar</string>
+    <string name="descricao2">Logo Sblenders</string>
+    <string name="descricao3">Imagem de perfil</string>
+    <string name="nome_usuario">Nome do Usuário</string>
+    <string name="logoff">Logoff</string>
+    <string name="dica_login">Login</string>
+    <string name="dica_senha">Senha</string>
+    <string name="entrar">Entrar</string>
 </resources>
