@@ -30,7 +30,7 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
 
     @Override
     public void onBindViewHolder(CardPedidoRecyclerViewAdapter.CardPedidoViewHolder cardPedidoViewHolder, int i) {
-        cardPedidoViewHolder.t.setText("Prato " +Integer.toString(i + 1) + "3 Mozzarella, 1 Picles, 2 Molho Adicional");
+        cardPedidoViewHolder.t.setText("Prato " +Integer.toString(i + 1) + " 3 Mozzarella, 1 Picles, 2 Molho Adicional");
         cardPedidoViewHolder.t.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
     }
     @Override
