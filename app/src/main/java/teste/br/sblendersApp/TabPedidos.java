@@ -13,42 +13,52 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TabPedidos extends Fragment {
+
+    public static JSONArray pedidos;
+    RecyclerView rcv;
+    public static SharedPreferences prefs;
     @Override
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle onCreateSavedInstanceBundle){
+        prefs = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         View inflatedLayout = inflater.inflate(R.layout.tab_pedido, container, false);
-        RecyclerView rcv = (RecyclerView)inflatedLayout.findViewById(R.id.rcv1);
-
+        rcv = (RecyclerView)inflatedLayout.findViewById(R.id.rcv1);
+        UpdatePedidos();
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(llm);
-        rcv.setAdapter(new PedidosAdapter());
         return inflatedLayout;
     }
 
     private void UpdatePedidos(){
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.GET, "https://localhost:44323/api/AgenteToken/", null, new Response.Listener<JSONObject>() {
+        JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
+                (Request.Method.GET, "https://localhost:44323/api/Pedidos/" + prefs.getInt("id",0), null, new Response.Listener<JSONArray>() {
 
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try{
-                        //response.get
+
+                            pedidos = response;
+                            rcv.setAdapter(new PedidosAdapter());
                         }
                         catch(Exception e){
-
+                            getActivity().finish();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -61,7 +71,14 @@ public class TabPedidos extends Fragment {
                         //  Toast.makeText(v.getContext(), "Falha ao entrar: Senha ou Login errados.", Toast.LENGTH_SHORT);
                         // }
                     }
-                });
+                }
+                ){@Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("Authorization", prefs.getString("token", ""));
+            return params;
+        }
+        };
 
         queue.add(jsonObjectRequest);
     }
