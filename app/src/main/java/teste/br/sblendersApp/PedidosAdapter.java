@@ -13,11 +13,13 @@ import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -28,6 +30,7 @@ import java.util.Map;
 
 public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosViewHolder> {
     SharedPreferences prefs;
+    RequestQueue queue;
     public class PedidosViewHolder extends  RecyclerView.ViewHolder{
         TextView pedidoNumTxt;
         RecyclerView rcvPratos;
@@ -89,6 +92,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
     public void onBindViewHolder(PedidosViewHolder personViewHolder, int i) {
         try{
         personViewHolder.pedidoNumTxt.setText("Pedido " + TabPedidos.pedidos.getJSONObject(i).getInt("pedidoID"));
+        personViewHolder.ordens.setText(TabPedidos.pedidos.getJSONObject(i).optString("instrucoes", "Nenhuma"));
         personViewHolder.btnRejeita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -120,7 +124,8 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
                                 personViewHolder.rcvPratos.setAdapter(new CardPedidoRecyclerViewAdapter(response));
                             }
                             catch(Exception e){
-
+                                System.out.println("DEBUG LINE!");
+                                e.printStackTrace();
                             }
                         }
                     }, new Response.ErrorListener() {
@@ -141,14 +146,16 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
                 return params;
             }
             };
+            queue.add(jsonObjectRequest);
 
         }
         catch (Exception e){
-
+            e.printStackTrace();
         }
     }
     @Override
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
+        queue = Volley.newRequestQueue(recyclerView.getContext());
     }
 }

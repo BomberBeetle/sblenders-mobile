@@ -10,9 +10,10 @@ import android.widget.TextView;
 import org.json.JSONObject;
 
 public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedidoRecyclerViewAdapter.CardPedidoViewHolder>{
+    JSONObject pedido;
     public CardPedidoRecyclerViewAdapter(JSONObject pedido){
         super();
-
+        this.pedido = pedido;
     }
     public class CardPedidoViewHolder extends  RecyclerView.ViewHolder{
         TextView t;
@@ -23,7 +24,11 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
     }
     @Override
     public int getItemCount() {
-        return 5;
+        try{return pedido.getJSONArray("produtos").length();}
+        catch(Exception e){
+            e.printStackTrace();
+         return 0;
+        }
     }
 
     @Override
@@ -36,7 +41,14 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
 
     @Override
     public void onBindViewHolder(CardPedidoRecyclerViewAdapter.CardPedidoViewHolder cardPedidoViewHolder, int i) {
-        cardPedidoViewHolder.t.setText("Prato " +Integer.toString(i + 1) + " 3 Mozzarella, 1 Picles, 2 Molho Adicional");
+        try {
+
+            cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(i).getInt("pedidoProdutoQtde")+ "x ID" + pedido.getJSONArray("produtos").getJSONObject(i).getInt("produtoID"));
+        }
+        catch (Exception e){
+        e.printStackTrace();
+        }
+
         cardPedidoViewHolder.t.setLayoutParams(new RecyclerView.LayoutParams(RecyclerView.LayoutParams.MATCH_PARENT, RecyclerView.LayoutParams.WRAP_CONTENT));
     }
     @Override
