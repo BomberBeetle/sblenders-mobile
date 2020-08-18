@@ -1,5 +1,8 @@
 package teste.br.sblendersApp;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -7,10 +10,24 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
 import org.json.JSONObject;
+
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedidoRecyclerViewAdapter.CardPedidoViewHolder>{
     JSONObject pedido;
+    SharedPreferences prefs;
+    RequestQueue queue;
     public CardPedidoRecyclerViewAdapter(JSONObject pedido){
         super();
         this.pedido = pedido;
@@ -19,6 +36,8 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
         TextView t;
         public CardPedidoViewHolder(View view){
             super(view);
+            prefs =  view.getContext().getSharedPreferences("login", Context.MODE_PRIVATE);
+            queue = Volley.newRequestQueue(view.getContext());
             t = (TextView)view;
         }
     }
@@ -42,8 +61,37 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
     @Override
     public void onBindViewHolder(CardPedidoRecyclerViewAdapter.CardPedidoViewHolder cardPedidoViewHolder, int i) {
         try {
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
+                    (Request.Method.GET, "https://localhost:44323/api/Produtos/" + URLEncoder.encode(pedido.getJSONArray("produtos").getJSONObject(i).getInt("produtoID")+""), null, new Response.Listener<JSONObject>() {
 
-            cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(i).getInt("pedidoProdutoQtde")+ "x ID" + pedido.getJSONArray("produtos").getJSONObject(i).getInt("produtoID"));
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try{
+                                cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getInt("pedidoProdutoQtde")+ "x " + response.getString("name"));
+                            }
+                            catch(Exception e){
+                                cardPedidoViewHolder.t.setText("bucetão");
+                                e.printStackTrace();
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+                            error.printStackTrace();
+
+                        }
+                    }
+                    ){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String>  params = new HashMap<String, String>();
+                    params.put("Authorization", prefs.getString("token", ""));
+                    return params;
+                }
+            };
+            queue.add(jsonObjectRequest);
+            queue.start();
         }
         catch (Exception e){
         e.printStackTrace();
