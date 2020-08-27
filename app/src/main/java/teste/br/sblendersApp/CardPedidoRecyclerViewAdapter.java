@@ -18,11 +18,14 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+
+import teste.br.sblendersApp.Models.Produto;
 
 public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedidoRecyclerViewAdapter.CardPedidoViewHolder>{
     JSONObject pedido;
@@ -67,10 +70,18 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
                         @Override
                         public void onResponse(JSONObject response) {
                             try{
-                                cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getInt("pedidoProdutoQtde")+ "x " + response.getString("name"));
+                                JSONArray ingredientes = pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getJSONArray("ingredientes");
+                                Produto p = new Produto(response);
+                                StringBuilder ingredientesString = new StringBuilder();
+                                ingredientesString.append("(");
+                                for (int i = 0; i < ingredientes.length(); i++) {
+                                    ingredientesString.append(ingredientes.getJSONObject(i).getInt("quantidade") + "x " +  p.getIngNameByPPID(ingredientes.getJSONObject(i).getInt("produtoIngredienteID"))+"/ ");
+                                }
+                                ingredientesString.append(")");
+                                cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getInt("pedidoProdutoQtde")+ "x " + response.getString("name") + ingredientesString.toString());
                             }
                             catch(Exception e){
-                                cardPedidoViewHolder.t.setText("bucetão");
+                                cardPedidoViewHolder.t.setText("Erro");
                                 e.printStackTrace();
                             }
                         }
