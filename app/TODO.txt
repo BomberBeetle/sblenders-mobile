@@ -1,0 +1,5 @@
+Todo:
+PUT de Pedidos - Mudar estados (rejeitar, marcar como pronto, entregue, etc.)
+Diferenciar tipos de funcionarios
+Notificações
+Carregar dados do funcionario
