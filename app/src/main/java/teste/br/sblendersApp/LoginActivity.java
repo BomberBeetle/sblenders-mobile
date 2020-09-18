@@ -61,7 +61,7 @@ public class LoginActivity extends AppCompatActivity {
                                 //Toast.makeText(a, response.optString("token", "deu merda"), Toast.LENGTH_SHORT).show();
                                 SharedPreferences prefs = getSharedPreferences("login", Context.MODE_PRIVATE);
                                 prefs.edit().putString("token", response.optString("token", "")).putInt("id", response.optInt("id", 0)).commit();
-                                Intent intent = new Intent(a, MainActivity.class);
+                                Intent intent = new Intent(a, StartActivity.class);
                                 startActivity(intent);
                                 finish();
                             }
@@ -70,10 +70,15 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // TODO: Handle error
+                                error.printStackTrace();
+                                if(error.networkResponse == null){
+                                    Toast.makeText(LoginActivity.this, "Erro de conexão.", Toast.LENGTH_SHORT).show();
+                                    return;
+                                }
                                 if(error.networkResponse.statusCode == 403){
                                     Toast.makeText(a, "Credencias Incorretas", Toast.LENGTH_SHORT).show();
                                 }
-                                error.printStackTrace();
+
                                 //if(error.networkResponse.statusCode == 403){
                                   //  Toast.makeText(v.getContext(), "Falha ao entrar: Senha ou Login errados.", Toast.LENGTH_SHORT);
                                // }

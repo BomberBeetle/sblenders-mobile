@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -80,9 +81,23 @@ public class StartActivity extends AppCompatActivity {
                         @Override
                         public void onResponse(JSONObject response) {
                             try{
+                                if(!response.has("emp_id")){
+                                    prefs.edit().clear().commit();
+                                    Toast.makeText(StartActivity.this, "Usuário desprivilegiado.", Toast.LENGTH_SHORT).show();
+                                }
+                                else{
+                                    prefs.edit()
+                                            .putInt("emp_id", response.getInt("emp_id"))
+                                            .putString("emp_name", response.getString("emp_name"))
+                                            .putInt("emp_type_id", response.getInt("emp_type_id"))
+                                            .putInt("restaurant_id", response.getInt("restaurant_id"))
+                                            .apply();
+                                }
+
                                 Intent i = new Intent(a, MainActivity.class);
                                 startActivity(i);
                                 finish();
+
                             }
                             catch(Exception e){
                                 finish();
