@@ -19,6 +19,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.JsonRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
@@ -29,6 +30,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosViewHolder> {
+    public PedidosAdapter(TabPedidos context){
+        super();
+        this.context = context;
+    }
+    TabPedidos context;
     SharedPreferences prefs;
     RequestQueue queue;
     public class PedidosViewHolder extends  RecyclerView.ViewHolder{
@@ -96,13 +102,15 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         personViewHolder.btnRejeita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                /*
-                Intent intent = new Intent(view.getContext(), PedidoActivity.class);
-                intent.putExtra("PEDIDO_NUM", i);
-                view.getContext().startActivity(intent);
-                */
+                rejeitarPedido(personViewHolder.getAdapterPosition());
             }
         });
+        personViewHolder.btnAceita.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    aceitarPedido(personViewHolder.getAdapterPosition());
+                }
+            });
         personViewHolder.spaghetti.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,5 +165,74 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
     public void onAttachedToRecyclerView(RecyclerView recyclerView) {
         super.onAttachedToRecyclerView(recyclerView);
         queue = Volley.newRequestQueue(recyclerView.getContext());
+    }
+    private void rejeitarPedido(int i){
+        StringRequest jsonObjectRequest = new StringRequest
+                (Request.Method.POST, "https://localhost:44323/api/Pedidos/" + prefs.getInt("id",0) + "/" + TabPedidos.pedidos.optJSONObject(i).optInt("pedidoID") + "/5",  new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try{
+                         PedidosAdapter.this.context.UpdatePedidos();
+                        }
+                        catch(Exception e){
+                            System.out.println("DEBUG LINE!");
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        error.printStackTrace();
+                        //if(error.networkResponse.statusCode == 403){
+                        //  Toast.makeText(v.getContext(), "Falha ao entrar: Senha ou Login errados.", Toast.LENGTH_SHORT);
+                        // }
+                    }
+                }
+                ){@Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("Authorization", prefs.getString("token", ""));
+            return params;
+        }
+        };
+        queue.add(jsonObjectRequest);
+    }
+    private void aceitarPedido(int i){
+        StringRequest jsonObjectRequest = new StringRequest
+                (Request.Method.POST, "https://localhost:44323/api/Pedidos/" + prefs.getInt("id",0) + "/" + TabPedidos.pedidos.optJSONObject(i).optInt("pedidoID") + "/2", new Response.Listener<String>() {
+
+                    @Override
+                    public void onResponse(String response) {
+                        try{
+                            PedidosAdapter.this.context.UpdatePedidos();
+                        }
+                        catch(Exception e){
+                            System.out.println("DEBUG LINE!");
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        // TODO: Handle error
+                        error.printStackTrace();
+                        //if(error.networkResponse.statusCode == 403){
+                        //  Toast.makeText(v.getContext(), "Falha ao entrar: Senha ou Login errados.", Toast.LENGTH_SHORT);
+                        // }
+                    }
+                }
+                ){@Override
+        public Map<String, String> getHeaders() throws AuthFailureError {
+            Map<String, String> params = new HashMap<String, String>();
+            params.put("Authorization", prefs.getString("token", ""));
+            return params;
+        }
+        };
+        queue.add(jsonObjectRequest);
+
     }
 }
