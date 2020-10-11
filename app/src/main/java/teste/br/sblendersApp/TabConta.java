@@ -40,6 +40,7 @@ public class TabConta extends Fragment {
     Button btnLogoff;
     SharedPreferences prefs;
     TextView userNameText;
+    TextView userTypeText;
     ImageView userPic;
     RequestQueue queue;
     @Override
@@ -47,7 +48,14 @@ public class TabConta extends Fragment {
         View tabConta = inflater.inflate(R.layout.tab_conta, container, false);
         prefs = getActivity().getSharedPreferences("login", Context.MODE_PRIVATE);
         queue = Volley.newRequestQueue(getContext());
-
+        userTypeText = tabConta.findViewById(R.id.userTypeText);
+        int emp_tid = prefs.getInt("emp_type_id", 0);
+        if(emp_tid==1){
+            userTypeText.setText("Cozinheiro");
+        }
+        else if(emp_tid==2){
+            userTypeText.setText("Entregador");
+        }
         userPic = tabConta.findViewById(R.id.imageView);
         ImageRequest imageRequest = new ImageRequest("https://localhost:44323/api/FuncionarioFoto/" + prefs.getInt("id", 1), new Response.Listener<Bitmap>() {
             @Override
