@@ -60,6 +60,9 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             ordens = view.findViewById(R.id.txt_instrucoes);
             ordensTitle = view.findViewById(R.id.card_text_instrucoes);
             spaghetti = view.findViewById(R.id.card_btn_retract);
+            if(prefs.getInt("emp_type_id", 0) == 2){
+                btnAceita.setText("Marcar como entregue");
+            }
             collapse();
         }
         public void collapse(){
@@ -201,8 +204,15 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         queue.add(jsonObjectRequest);
     }
     private void aceitarPedido(int i){
+        int methodNumber;
+        if(prefs.getInt("emp_type_id", 0) == 2){
+            methodNumber = 3;
+        }
+        else{
+            methodNumber = 1;
+        }
         StringRequest jsonObjectRequest = new StringRequest
-                (Request.Method.POST, "https://localhost:44323/api/Pedidos/" + prefs.getInt("id",0) + "/" + TabPedidos.pedidos.optJSONObject(i).optInt("pedidoID") + "/2", new Response.Listener<String>() {
+                (Request.Method.POST, "https://localhost:44323/api/Pedidos/" + prefs.getInt("id",0) + "/" + TabPedidos.pedidos.optJSONObject(i).optInt("pedidoID") + "/" + methodNumber, new Response.Listener<String>() {
 
                     @Override
                     public void onResponse(String response) {
