@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ public class TabPedidos extends Fragment {
 
     public static JSONArray pedidos;
     RecyclerView rcv;
+    FloatingActionButton refresh;
     public static SharedPreferences prefs;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle onCreateSavedInstanceBundle){
@@ -40,6 +42,13 @@ public class TabPedidos extends Fragment {
         View inflatedLayout = inflater.inflate(R.layout.tab_pedido, container, false);
         rcv = (RecyclerView)inflatedLayout.findViewById(R.id.rcv1);
         UpdatePedidos();
+        refresh = inflatedLayout.findViewById(R.id.refreshingButton);
+        refresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UpdatePedidos();
+            }
+        });
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(llm);
         return inflatedLayout;
