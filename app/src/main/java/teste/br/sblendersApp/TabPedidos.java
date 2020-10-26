@@ -29,12 +29,15 @@ import org.json.JSONObject;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class TabPedidos extends Fragment {
 
     public static JSONArray pedidos;
     RecyclerView rcv;
     FloatingActionButton refresh;
+    Timer oTimer;
     public static SharedPreferences prefs;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle onCreateSavedInstanceBundle){
@@ -51,6 +54,13 @@ public class TabPedidos extends Fragment {
         });
         LinearLayoutManager llm = new LinearLayoutManager(getActivity());
         rcv.setLayoutManager(llm);
+        oTimer = new Timer();
+        oTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                UpdatePedidos();
+            }
+        }, 15000, 15000);
         return inflatedLayout;
     }
 
