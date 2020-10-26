@@ -49,6 +49,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         TextView ordensTitle;
         TextView endereco;
         TextView enderecoTitle;
+        TextView segure;
         View cardReference;
         Button spaghetti;
         JSONObject pedido;
@@ -65,6 +66,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             ordensTitle = view.findViewById(R.id.card_text_instrucoes);
             endereco = view.findViewById(R.id.txt_endereco);
             enderecoTitle = view.findViewById(R.id.card_text_endereco);
+            segure = view.findViewById(R.id.txt_segure);
             spaghetti = view.findViewById(R.id.card_btn_retract);
             if(prefs.getInt("emp_type_id", 0) == 2){
                 btnAceita.setText("Marcar como entregue");
@@ -80,6 +82,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             ordensTitle.setVisibility(View.GONE);
             endereco.setVisibility(View.GONE);
             enderecoTitle.setVisibility(View.GONE);
+            segure.setVisibility(View.GONE);
             collapsed = true;
         }
         public void open(){
@@ -91,6 +94,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             ordensTitle.setVisibility(View.VISIBLE );
             endereco.setVisibility(View.VISIBLE);
             enderecoTitle.setVisibility(View.VISIBLE );
+            segure.setVisibility(View.VISIBLE);
             collapsed = false;
         }
     }

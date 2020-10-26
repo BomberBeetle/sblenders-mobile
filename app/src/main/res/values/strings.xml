@@ -16,4 +16,5 @@
     <string name="dica_login">Login</string>
     <string name="dica_senha">Senha</string>
     <string name="entrar">Entrar</string>
+    <string name="segure">Toque e segure o card para abrir no mapa</string>
 </resources>
