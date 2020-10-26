@@ -76,11 +76,13 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
                                 if(ingredientes.length() > 0) {
                                     ingredientesString.append("(");
                                     for (int i = 0; i < ingredientes.length(); i++) {
-                                        ingredientesString.append(ingredientes.getJSONObject(i).getInt("quantidade") + "x " + p.getIngNameByPPID(ingredientes.getJSONObject(i).getInt("produtoIngredienteID")) + "/ ");
+                                        ingredientesString.append(ingredientes.getJSONObject(i).getInt("quantidade") + "x " + p.getIngNameByPPID(ingredientes.getJSONObject(i).getInt("produtoIngredienteID")) + ", ");
                                     }
+                                    ingredientesString.deleteCharAt(ingredientesString.length() - 1);
+                                    ingredientesString.deleteCharAt(ingredientesString.length() - 1);
                                     ingredientesString.append(")");
                                 }
-                                cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getInt("pedidoProdutoQtde")+ "x " + response.getString("name") + ingredientesString.toString());
+                                cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getInt("pedidoProdutoQtde")+ "x " + response.getString("name") +" "+ ingredientesString.toString());
                             }
                             catch(Exception e){
                                 cardPedidoViewHolder.t.setText("Erro");

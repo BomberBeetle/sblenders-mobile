@@ -60,7 +60,7 @@ public class TabPedidos extends Fragment {
             public void run() {
                 UpdatePedidos();
             }
-        }, 15000, 15000);
+        }, 30000, 30000);
         return inflatedLayout;
     }
 
