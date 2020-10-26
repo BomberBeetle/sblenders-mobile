@@ -108,8 +108,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
     public void onBindViewHolder(PedidosViewHolder personViewHolder, int i) {
         try{
         personViewHolder.pedidoNumTxt.setText("Pedido " + TabPedidos.pedidos.getJSONObject(i).getInt("pedidoID"));
-        personViewHolder.ordens.setText(TabPedidos.pedidos.getJSONObject(i).optString("instrucoes", "Nenhuma"));
-        personViewHolder.endereco.setText(TabPedidos.pedidos.getJSONObject(i).optString("endereco", "Nenhum"));
+
         personViewHolder.btnRejeita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,6 +140,8 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
                         public void onResponse(JSONObject response) {
                             try{
                                 personViewHolder.rcvPratos.setAdapter(new CardPedidoRecyclerViewAdapter(response));
+                                personViewHolder.ordens.setText(response.optString("instrucoes", "Nenhuma"));
+                                personViewHolder.endereco.setText(response.optString("endereco", "Nenhum"));
                             }
                             catch(Exception e){
                                 System.out.println("DEBUG LINE!");
