@@ -65,7 +65,6 @@ public class TabPedidos extends Fragment {
     }
 
     public void UpdatePedidos(){
-        Toast.makeText(getContext(), "updated", Toast.LENGTH_SHORT).show();
         RequestQueue queue = Volley.newRequestQueue(getActivity());
         JsonArrayRequest jsonObjectRequest = new JsonArrayRequest
                 (Request.Method.GET, "https://localhost:44323/api/Pedidos/" + prefs.getInt("id",0), null, new Response.Listener<JSONArray>() {
