@@ -44,8 +44,9 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         Button btnAceita;
         ImageButton btnCollapse;
         TextView ordens;
-
         TextView ordensTitle;
+        TextView endereco;
+        TextView enderecoTitle;
         Button spaghetti;
         JSONObject pedido;
         boolean collapsed;
@@ -59,6 +60,8 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             btnCollapse = view.findViewById(R.id.card_collapse_button);
             ordens = view.findViewById(R.id.txt_instrucoes);
             ordensTitle = view.findViewById(R.id.card_text_instrucoes);
+            endereco = view.findViewById(R.id.txt_endereco);
+            enderecoTitle = view.findViewById(R.id.card_text_endereco);
             spaghetti = view.findViewById(R.id.card_btn_retract);
             if(prefs.getInt("emp_type_id", 0) == 2){
                 btnAceita.setText("Marcar como entregue");
@@ -72,6 +75,8 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             btnAceita.setVisibility(View.GONE);
             ordens.setVisibility(View.GONE);
             ordensTitle.setVisibility(View.GONE);
+            endereco.setVisibility(View.GONE);
+            enderecoTitle.setVisibility(View.GONE);
             collapsed = true;
         }
         public void open(){
@@ -81,6 +86,8 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
             btnAceita.setVisibility(View.VISIBLE);
             ordens.setVisibility(View.VISIBLE);
             ordensTitle.setVisibility(View.VISIBLE );
+            endereco.setVisibility(View.VISIBLE);
+            enderecoTitle.setVisibility(View.VISIBLE );
             collapsed = false;
         }
     }
@@ -102,6 +109,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         try{
         personViewHolder.pedidoNumTxt.setText("Pedido " + TabPedidos.pedidos.getJSONObject(i).getInt("pedidoID"));
         personViewHolder.ordens.setText(TabPedidos.pedidos.getJSONObject(i).optString("instrucoes", "Nenhuma"));
+        personViewHolder.endereco.setText(TabPedidos.pedidos.getJSONObject(i).optString("endereco", "Nenhum"));
         personViewHolder.btnRejeita.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

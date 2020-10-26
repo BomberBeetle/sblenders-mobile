@@ -6,6 +6,7 @@
     <string name="pedido">Pedido XXXX</string>
     <string name="rejeitar">Rejeitar</string>
     <string name="instrucoes">Instruções</string>
+    <string name="endereco">Endereço</string>
     <string name="marcar">Marcar como pronto</string>
     <string name="descricao">Botão de dropar</string>
     <string name="descricao2">Logo Sblenders</string>
