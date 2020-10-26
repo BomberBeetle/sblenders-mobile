@@ -214,11 +214,11 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
     }
     private void aceitarPedido(int i){
         int methodNumber;
-        if(prefs.getInt("emp_type_id", 0) == 2){
-            methodNumber = 3;
+        if(prefs.getInt("emp_type_id", 0) == 2){ //se o cara for entrgador
+            methodNumber = 4;
         }
         else{
-            methodNumber = 1;
+            methodNumber = 3;
         }
         StringRequest jsonObjectRequest = new StringRequest
                 (Request.Method.POST, "https://localhost:44323/api/Pedidos/" + prefs.getInt("id",0) + "/" + TabPedidos.pedidos.optJSONObject(i).optInt("pedidoID") + "/" + methodNumber, new Response.Listener<String>() {
