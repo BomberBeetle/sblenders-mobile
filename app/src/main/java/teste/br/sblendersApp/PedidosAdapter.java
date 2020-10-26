@@ -1,7 +1,9 @@
 package teste.br.sblendersApp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -47,6 +49,7 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
         TextView ordensTitle;
         TextView endereco;
         TextView enderecoTitle;
+        View cardReference;
         Button spaghetti;
         JSONObject pedido;
         boolean collapsed;
@@ -99,7 +102,9 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
     @Override
     public PedidosViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.card_pedido, viewGroup, false);
+
         PedidosViewHolder pvh = new PedidosViewHolder(v);
+        pvh.cardReference = v;
 
         return pvh;
     }
@@ -142,6 +147,16 @@ public class PedidosAdapter extends RecyclerView.Adapter<PedidosAdapter.PedidosV
                                 personViewHolder.rcvPratos.setAdapter(new CardPedidoRecyclerViewAdapter(response));
                                 personViewHolder.ordens.setText(response.optString("instrucoes", "Nenhuma"));
                                 personViewHolder.endereco.setText(response.optString("endereco", "Nenhum"));
+                                personViewHolder.cardReference.setOnLongClickListener(new View.OnLongClickListener() {
+                                    @Override
+                                    public boolean onLongClick(View v) {
+                                        Uri gmmIntentUri = Uri.parse("geo:0,0?q=" + Uri.encode(response.optString("endereco")));
+                                        Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                        mapIntent.setPackage("com.google.android.apps.maps");
+                                        v.getContext().startActivity(mapIntent);
+                                        return true;
+                                    }
+                                });
                             }
                             catch(Exception e){
                                 System.out.println("DEBUG LINE!");
