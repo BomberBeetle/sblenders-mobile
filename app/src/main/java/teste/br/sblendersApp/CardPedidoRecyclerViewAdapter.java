@@ -73,11 +73,13 @@ public class CardPedidoRecyclerViewAdapter extends RecyclerView.Adapter<CardPedi
                                 JSONArray ingredientes = pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getJSONArray("ingredientes");
                                 Produto p = new Produto(response);
                                 StringBuilder ingredientesString = new StringBuilder();
-                                ingredientesString.append("(");
-                                for (int i = 0; i < ingredientes.length(); i++) {
-                                    ingredientesString.append(ingredientes.getJSONObject(i).getInt("quantidade") + "x " +  p.getIngNameByPPID(ingredientes.getJSONObject(i).getInt("produtoIngredienteID"))+"/ ");
+                                if(ingredientes.length() > 0) {
+                                    ingredientesString.append("(");
+                                    for (int i = 0; i < ingredientes.length(); i++) {
+                                        ingredientesString.append(ingredientes.getJSONObject(i).getInt("quantidade") + "x " + p.getIngNameByPPID(ingredientes.getJSONObject(i).getInt("produtoIngredienteID")) + "/ ");
+                                    }
+                                    ingredientesString.append(")");
                                 }
-                                ingredientesString.append(")");
                                 cardPedidoViewHolder.t.setText(pedido.getJSONArray("produtos").getJSONObject(cardPedidoViewHolder.getAdapterPosition()).getInt("pedidoProdutoQtde")+ "x " + response.getString("name") + ingredientesString.toString());
                             }
                             catch(Exception e){
