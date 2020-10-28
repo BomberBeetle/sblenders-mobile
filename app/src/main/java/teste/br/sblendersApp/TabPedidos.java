@@ -4,6 +4,7 @@ package teste.br.sblendersApp;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -108,7 +109,7 @@ public class TabPedidos extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
-                            if(pedidos != null){
+                            if(pedidos != null && !getActivity().getLifecycle().getCurrentState().isAtLeast(Lifecycle.State.RESUMED)){
                                 ArrayList<Integer> ids = new ArrayList<Integer>();
                                 for(int i = 0; i < pedidos.length(); i++){
                                     ids.add(pedidos.getJSONObject(i).optInt("pedidoID"));
