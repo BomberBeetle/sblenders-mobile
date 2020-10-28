@@ -85,8 +85,9 @@ public class TabPedidos extends Fragment {
     }
 
     private void addNotification(){
-        PackageManager pm = getContext().getPackageManager();
-        Intent appStartIntent = pm.getLaunchIntentForPackage(BuildConfig.APPLICATION_ID);
+        Intent appStartIntent = new Intent(getContext(), StartActivity.class);
+        appStartIntent.setAction(Intent.ACTION_MAIN);
+        appStartIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         PendingIntent p = PendingIntent.getService(getContext(),10, appStartIntent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "Canal")
                 .setSmallIcon(R.drawable.logo)
