@@ -3,9 +3,11 @@ package teste.br.sblendersApp;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -83,12 +85,15 @@ public class TabPedidos extends Fragment {
     }
 
     private void addNotification(){
+        PackageManager pm = getContext().getPackageManager();
+        Intent appStartIntent = pm.getLaunchIntentForPackage(BuildConfig.APPLICATION_ID);
+        PendingIntent p = PendingIntent.getService(getContext(),10, appStartIntent,0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "Canal")
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("Notificação Sblenders")
                 .setContentText("Essa é uma notificação do Sblenders")
                 .setPriority(NotificationCompat.PRIORITY_MAX)
-                .setContentIntent(pendingIntent)
+                .setContentIntent(p)
                 .setAutoCancel(true);
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
         notificationManager.notify(1, builder.build());
