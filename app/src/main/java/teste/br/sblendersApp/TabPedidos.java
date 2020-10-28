@@ -35,6 +35,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
@@ -90,8 +91,8 @@ public class TabPedidos extends Fragment {
         PendingIntent p = PendingIntent.getActivity(getContext(), 10, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "Canal")
                 .setSmallIcon(R.drawable.logo)
-                .setContentTitle("Notificação Sblenders")
-                .setContentText("Essa é uma notificação do Sblenders")
+                .setContentTitle("Novos Pedidos")
+                .setContentText("Foram adicionados novos pedidos.")
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setContentIntent(p)
                 .setAutoCancel(true);
@@ -107,9 +108,21 @@ public class TabPedidos extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
+                            if(pedidos != null){
+                                ArrayList<Integer> ids = new ArrayList<Integer>();
+                                for(int i = 0; i < pedidos.length(); i++){
+                                    ids.add(pedidos.getJSONObject(i).optInt("pedidoID"));
+                                }
+                                for(int i = 0; i < response.length(); i++){
+                                    if(!ids.contains(response.getJSONObject(i).optInt("pedidoID"))){
+                                        addNotification();
+                                        break;
+                                    }
+                                }
+                            }
                             pedidos = response;
                             rcv.setAdapter(new PedidosAdapter(TabPedidos.this));
-                            addNotification();
+
                         }
                         catch(Exception e){
                             getActivity().finish();
