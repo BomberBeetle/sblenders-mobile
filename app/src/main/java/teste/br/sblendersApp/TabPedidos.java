@@ -121,6 +121,7 @@ public class TabPedidos extends Fragment {
                                 }
                             }
                             pedidos = response;
+                            rcv.invalidate();
                             rcv.setAdapter(new PedidosAdapter(TabPedidos.this));
 
                         }
