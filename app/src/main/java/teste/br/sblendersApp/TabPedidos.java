@@ -1,12 +1,17 @@
 package teste.br.sblendersApp;
 
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -61,7 +66,32 @@ public class TabPedidos extends Fragment {
                 UpdatePedidos();
             }
         }, 30000, 30000);
+        createNotificationChannel();
         return inflatedLayout;
+    }
+
+    private void createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = "Sblenders notifs";
+            String description = "Notificações do Sblenders";
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel("Canal", name, importance);
+            channel.setDescription(description);
+            NotificationManager notificationManager = getActivity().getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+    }
+
+    private void addNotification(){
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "Canal")
+                .setSmallIcon(R.drawable.logo)
+                .setContentTitle("Notificação Sblenders")
+                .setContentText("Essa é uma notificação do Sblenders")
+                .setPriority(NotificationCompat.PRIORITY_MAX)
+                .setContentIntent(pendingIntent)
+                .setAutoCancel(true);
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(getContext());
+        notificationManager.notify(1, builder.build());
     }
 
     public void UpdatePedidos(){
@@ -72,10 +102,9 @@ public class TabPedidos extends Fragment {
                     @Override
                     public void onResponse(JSONArray response) {
                         try{
-
                             pedidos = response;
                             rcv.setAdapter(new PedidosAdapter(TabPedidos.this));
-
+                            addNotification();
                         }
                         catch(Exception e){
                             getActivity().finish();
