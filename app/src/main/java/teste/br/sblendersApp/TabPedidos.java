@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -85,10 +86,8 @@ public class TabPedidos extends Fragment {
     }
 
     private void addNotification(){
-        Intent appStartIntent = new Intent(getContext(), StartActivity.class);
-        appStartIntent.setAction(Intent.ACTION_MAIN);
-        appStartIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-        PendingIntent p = PendingIntent.getService(getContext(),10, appStartIntent,0);
+        Intent intent = new Intent(getContext(), StartActivity.class);
+        PendingIntent p = PendingIntent.getActivity(getContext(), 10, intent, 0);
         NotificationCompat.Builder builder = new NotificationCompat.Builder(getContext(), "Canal")
                 .setSmallIcon(R.drawable.logo)
                 .setContentTitle("Notificação Sblenders")
